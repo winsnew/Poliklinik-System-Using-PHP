@@ -1,6 +1,6 @@
 <?php
-include("/xampp/htdocs/poliklinikUTS/connect/connect.php");
-include "/xampp/htdocs/poliklinikUTS/connect/procesPeriksa.php";
+include("./connect/connect.php");
+include "./connect/procesPeriksa.php";
 
 // Cek apakah user sudah login
 if (!isset($_SESSION['username'])) {
@@ -17,7 +17,7 @@ if (!isset($_SESSION['username'])) {
     $id_dokter = '';
     $tgl_periksa = '';
     $catatan = '';
-    $obat = '';
+    $biaya_periksa = '';
     if (isset($_GET['id'])) {
         $ambil = mysqli_query($connection,
             "SELECT * FROM periksa 
@@ -28,7 +28,7 @@ if (!isset($_SESSION['username'])) {
             $id_dokter = $row['id_dokter'];
             $tgl_periksa = $row['tgl_periksa'];
             $catatan = $row['catatan'];
-            $obat = $row['obat'];
+            $biaya_periksa = $row['biaya_periksa'];
         }
     ?>
         <input type="hidden" name="id_periksa" value="<?php echo $id_periksa; ?>">
@@ -82,8 +82,8 @@ if (!isset($_SESSION['username'])) {
             <input type="text" class="form-control" name="catatan" id="catatan" placeholder="catatan" value="<?php echo $catatan ?>">
         </div>
         <div class="form-group mx-sm-3 mb-2">
-            <label for="inputTanggal" class="sr-only">Obat</label>
-            <input type="text" class="form-control" name="obat" id="obat" placeholder="obat" value="<?php echo $obat ?>">
+            <label for="inputTanggal" class="sr-only">Biaya Periksa</label>
+            <input type="text" class="form-control" name="biaya_periksa" id="biaya" placeholder="biaya" value="<?php echo $biaya_periksa ?>">
         </div>
         <div class="form-group mx-sm-3 mb-2">
             <button type="submit" class="btn btn-primary rounded-pill px-3 pl-4" name="simpan">Simpan</button>
@@ -99,14 +99,14 @@ if (!isset($_SESSION['username'])) {
             <th scope="col">Nama Dokter</th>
             <th scope="col">Tanggal Periksa</th>
             <th scope="col">Catatan</th>
-            <th scope="col">Obat</th>
+            <th scope="col">Biaya</th>
             <th scope="col">Aksi</th>
         </tr>
     </thead>
     <!--tbody berisi isi tabel sesuai dengan judul atau head-->
     <tbody>
         <?php
-        $result = mysqli_query($connection, "SELECT pr.*,d.nama as 'nama_dokter', p.data_pasien as 'nama_pasien' FROM periksa pr LEFT JOIN dokter d ON (pr.id_dokter=d.id) LEFT JOIN pasien p ON (pr.id_pasien=p.id) ORDER BY pr.tgl_periksa DESC");
+        $result = mysqli_query($connection, "SELECT pr.*,d.nama as 'nama_dokter', p.data_pasien as 'nama_pasien' FROM periksa pr LEFT JOIN dokter d ON (pr.id_dokter=d.id) LEFT JOIN pasien p ON (pr.id_pasien=p.id)  ORDER BY pr.tgl_periksa DESC");
         $no = 1;
         while ($data = mysqli_fetch_array($result)) {
         ?>
@@ -116,11 +116,12 @@ if (!isset($_SESSION['username'])) {
                 <td><?php echo $data['nama_dokter'] ?></td>
                 <td><?php echo $data['tgl_periksa'] ?></td>
                 <td><?php echo $data['catatan'] ?></td>
-                <td><?php echo $data['obat'] ?></td>
+                <td><?php echo $data['biaya_periksa'] ?></td>
                 <td>
                     <a class="btn btn-success rounded-pill px-3" href="index.php?page=periksa&id=<?php echo $data['id_periksa'] ?>">
                         Ubah</a>
                     <a class="btn btn-danger rounded-pill px-3" href="index.php?page=periksa&id=<?php echo $data['id_periksa'] ?>&aksi=hapus">Hapus</a>
+                    <a class="btn btn-danger rounded-pill px-3" href="index.php?page=detail&id=<?php echo $data['id_periksa'] ?>&aksi=detail">Detail</a>
                 </td>
             </tr>
         <?php

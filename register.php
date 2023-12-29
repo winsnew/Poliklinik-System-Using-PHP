@@ -1,10 +1,12 @@
 <?php
-include_once('/xampp/htdocs/poliklinikUTS/connect/connect.php');
+include_once('./connect/connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     
+    // $hash_pass = password_hash($password, PASSWORD_DEFAULT);
+
     $check_query = "SELECT * FROM users WHERE username='$username'";
     $check_result = mysqli_query($connection, $check_query);
 

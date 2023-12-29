@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('/xampp/htdocs/poliklinikUTS/connect/connect.php');
+include_once('./connect/connect.php');
 isset($_SESSION['username'])
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ isset($_SESSION['username'])
     <title>Document</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg text-black">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-md">
             <a class="navbar-brand" href="#">Poliklinik</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,9 +40,14 @@ isset($_SESSION['username'])
                                     Pasien
                                 </a>
                             </li>
+                            <li>
+                                <a class="dropdown-item" href="index.php?page=obat">
+                                    Obat
+                                </a>
+                            </li>
                         </ul>
                     </li>
-
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?page=periksa">
                             Periksa

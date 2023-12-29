@@ -1,6 +1,6 @@
 <?php
 include_once('./connect/connect.php');
-include "./connect/processPasien.php";
+include "./connect/processObat.php";
 
 
 // Cek apakah user sudah login
@@ -9,22 +9,21 @@ if (!isset($_SESSION['username'])) {
     header("Location: index.php?page=login");
     exit();
 }
-
 ?>
+
 <form class="form row" method="POST" action="" name="myForm" onsubmit="return(validate());">
-    <!-- Kode php untuk menghubungkan form dengan database -->
     <?php
-    $data_pasien = '';
-    $alamat = '';
-    $nohp = '';
+    $nama_obat = '';
+    $kemasan = '';
+    $harga = '';
     if (isset($_GET['id'])) {
         $ambil = mysqli_query($connection, 
-        "SELECT * FROM pasien 
+        "SELECT * FROM obat
         WHERE id='" . $_GET['id'] . "'");
         while ($row = mysqli_fetch_array($ambil)) {
-            $data_pasien = $row['data_pasien'];
-            $alamat = $row['alamat'];
-            $nohp = $row['nohp'];
+            $nama_obat = $row['nama_obat'];
+            $kemasan = $row['kemasan'];
+            $harga = $row['harga'];
         }
     ?>
         <input type="hidden" name="id" value="<?php echo
@@ -33,23 +32,23 @@ if (!isset($_SESSION['username'])) {
     }
     ?>
     <div class="col">
-    <div class="col">
-        <label for="inputIsi" class="form-label fw-bold">
-            Nama Pasien
+     <div class="col">
+        <label for="namaObat" class="form-label fw-bold">
+            Nama Obat
         </label>
-        <input type="text" class="form-control" name="data_pasien" id="data_pasien" placeholder="Nama" value="<?php echo $data_pasien ?>">
+        <input type="text" class="form-control" name="nama_obat" id="inputNama" placeholder="Nama" value="<?php echo $nama_obat ?>">
     </div>
     <div class="col">
-        <label for="inputAlamat" class="form-label fw-bold">
-            Alamat
+        <label for="inputKemasan" class="form-label fw-bold">
+            Kemasan
         </label>
-        <input type="text" class="form-control" name="alamat" id="inputAlamat" placeholder="Alamat" value="<?php echo $alamat ?>">
+        <input type="text" class="form-control" name="kemasan" id="inputKemasan" placeholder="Kemasan" value="<?php echo $kemasan ?>">
     </div>
     <div class="col mb-2">
-        <label for="inputNoHp" class="form-label fw-bold">
-        No_HP
+        <label for="inputHarga" class="form-label fw-bold">
+            Harga
         </label>
-        <input type="text" class="form-control" name="nohp" id="nohp" placeholder="No Hp" value="<?php echo $nohp ?>">
+        <input type="number" class="form-control" name="harga" id="inputHarga" placeholder="Harga" value="<?php echo $harga ?>">
     </div>
     <div class="col">
         <button type="submit" class="btn btn-primary rounded-pill px-3" name="simpan">Simpan</button>
@@ -61,9 +60,9 @@ if (!isset($_SESSION['username'])) {
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Nama Pasien</th>
-            <th scope="col">Alamat</th>
-            <th scope="col">No_HP</th>
+            <th scope="col">Nama Obat</th>
+            <th scope="col">Kemasan</th>
+            <th scope="col">Harga</th>
             
             <th scope="col">Aksi</th>
         </tr>
@@ -74,23 +73,23 @@ if (!isset($_SESSION['username'])) {
         berdasarkan status dan tanggal awal-->
         <?php
         $result = mysqli_query(
-            $connection,"SELECT * FROM pasien "
+            $connection,"SELECT * FROM obat "
             );
         $no = 1;
         while ($data = mysqli_fetch_array($result)) {
         ?>
             <tr>
                 <th scope="row"><?php echo $no++ ?></th>
-                <td><?php echo $data['data_pasien'] ?></td>
-                <td><?php echo $data['alamat'] ?></td>
-                <td><?php echo $data['nohp'] ?></td>
+                <td><?php echo $data['nama_obat'] ?></td>
+                <td><?php echo $data['kemasan'] ?></td>
+                <td><?php echo $data['harga'] ?></td>
                 
                 <td>
                     <a class="btn btn-info rounded-pill px-3" 
-                    href="index.php?page=pasien&id=<?php echo $data['id'] ?>">Ubah
+                    href="index.php?page=obat&id=<?php echo $data['id'] ?>">Ubah
                     </a>
                     <a class="btn btn-danger rounded-pill px-3" 
-                    href="index.php?page=pasien&id=<?php echo $data['id'] ?>&aksi=hapus">Hapus
+                    href="index.php?page=obat&id=<?php echo $data['id'] ?>&aksi=hapus">Hapus
                     </a>
                 </td>
             </tr>

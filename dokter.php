@@ -1,6 +1,6 @@
 <?php
-include_once('/xampp/htdocs/poliklinikUTS/connect/connect.php');
-include "/xampp/htdocs/poliklinikUTS/connect/process.php";
+include_once('./connect/connect.php');
+include "./connect/process.php";
 
 
 // Cek apakah user sudah login

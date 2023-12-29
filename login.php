@@ -1,5 +1,5 @@
 <?php
-include_once('/xampp/htdocs/poliklinikUTS/connect/connect.php');
+include_once('./connect/connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
