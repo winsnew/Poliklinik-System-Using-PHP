@@ -8,7 +8,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-
 if (isset($_POST['simpan'])) {
     $id_pasien = $_POST['id_pasien'];
     $id_dokter = $_POST['id_dokter'];
