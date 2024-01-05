@@ -105,8 +105,8 @@ if (!isset($_SESSION['username'])) {
     </thead>
     <!--tbody berisi isi tabel sesuai dengan judul atau head-->
     <tbody>
-        <?php
-        $result = mysqli_query($connection, "SELECT pr.*,d.nama as 'nama_dokter', p.data_pasien as 'nama_pasien' FROM periksa pr LEFT JOIN dokter d ON (pr.id_dokter=d.id) LEFT JOIN pasien p ON (pr.id_pasien=p.id)  ORDER BY pr.tgl_periksa DESC");
+        <?php        
+        $result = mysqli_query($connection, "SELECT pr.*, d.nama as 'nama_dokter', p.data_pasien as 'nama_pasien', SUM(o.harga) as 'biaya_obat_total' FROM periksa pr LEFT JOIN dokter d ON (pr.id_dokter=d.id) LEFT JOIN pasien p ON (pr.id_pasien=p.id) LEFT JOIN detail_periksa dp ON (pr.id_periksa=dp.id_periksa) LEFT JOIN obat o ON (dp.id_obat=o.id) GROUP BY pr.id_periksa ORDER BY pr.tgl_periksa DESC");
         $no = 1;
         while ($data = mysqli_fetch_array($result)) {
         ?>
@@ -116,12 +116,12 @@ if (!isset($_SESSION['username'])) {
                 <td><?php echo $data['nama_dokter'] ?></td>
                 <td><?php echo $data['tgl_periksa'] ?></td>
                 <td><?php echo $data['catatan'] ?></td>
-                <td><?php echo $data['biaya_periksa'] ?></td>
+                <td><?php echo $data['biaya_periksa'] + $data['biaya_obat_total'] ?></td>
                 <td>
                     <a class="btn btn-success rounded-pill px-3" href="index.php?page=periksa&id=<?php echo $data['id_periksa'] ?>">
                         Ubah</a>
                     <a class="btn btn-danger rounded-pill px-3" href="index.php?page=periksa&id=<?php echo $data['id_periksa'] ?>&aksi=hapus">Hapus</a>
-                    <a class="btn btn-danger rounded-pill px-3" href="index.php?page=detail&id=<?php echo $data['id_periksa'] ?>&aksi=detail">Detail</a>
+                    <a class="btn btn-danger rounded-pill px-3" href="index.php?page=detail&id_periksa=<?php echo $data['id_periksa'] ?>">Detail</a>
                 </td>
             </tr>
         <?php

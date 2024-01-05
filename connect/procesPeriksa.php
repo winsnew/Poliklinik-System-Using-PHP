@@ -34,7 +34,7 @@ if (isset($_GET['aksi'])) {
             </script>";
 }
 
-if (isset($_GET['id_periksa']) && isset($_GET['aksi']) && $_GET['aksi'] == 'detail') {
+if (isset($_GET['id_periksa'])) {
     $id_periksa = $_GET['id_periksa'];
 
     // Fetch patient and examination details based on id_periksa
@@ -48,15 +48,5 @@ if (isset($_GET['id_periksa']) && isset($_GET['aksi']) && $_GET['aksi'] == 'deta
     if ($result && mysqli_num_rows($result) > 0) {
         $data = mysqli_fetch_assoc($result);
 
-        // Display patient and examination details
-        echo '<h2>Detail Periksa</h2>';
-        echo '<p>Nama Pasien: ' . $data['data_pasien'] . '</p>';
-        echo '<p>Tanggal Periksa: ' . $data['tgl_periksa'] . '</p>';
-        // Add other details as needed
-    } else {
-        echo '<p>Data not found.</p>';
-    }
-} else {
-    echo '<p>Invalid request.</p>';
+    };
 }
-?>
