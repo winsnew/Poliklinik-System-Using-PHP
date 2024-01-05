@@ -1,7 +1,6 @@
 <?php
 // Check if the form is submitted
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+
 
 if (isset($_POST['simpan'])) {
     // Retrieve form data

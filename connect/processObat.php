@@ -2,6 +2,8 @@
 
 if (isset($_POST['simpan'])) {
     
+    
+ini_set('display_errors', 1);
     $nama_obat = $_POST['nama_obat'];
     $kemasan = $_POST['kemasan'];
     $harga = $_POST['harga'];
